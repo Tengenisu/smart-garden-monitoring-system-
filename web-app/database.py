@@ -5,10 +5,11 @@ def init_db():
         conn = psycopg.connect(
             dbname="sensor",
             user="postgres",
-            password="Aryan1027@@",
+            password="1Ab2",
             host="localhost"
         )
         cur = conn.cursor()
+        cur.execute('''DROP TABLE IF EXISTS sensor_data''')
         cur.execute('''CREATE TABLE IF NOT EXISTS sensor_data (
                         id SERIAL PRIMARY KEY,
                         timestamp TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
