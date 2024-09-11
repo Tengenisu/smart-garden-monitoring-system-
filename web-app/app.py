@@ -1,13 +1,87 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for, flash, request
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from flask_bcrypt import Bcrypt
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import InputRequired, Length, ValidationError
 import psycopg
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'your_secret_key'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1Ab2@localhost/sensor'  # Update with your database credentials
 
-def get_latest_data():
+db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), nullable=False, unique=True)
+    password = db.Column(db.String(80), nullable=False)
+
+class RegisterForm(FlaskForm):
+    username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
+    password = PasswordField(validators=[InputRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Password"})
+    submit = SubmitField('Register')
+
+    def validate_username(self, username):
+        existing_user = User.query.filter_by(username=username.data).first()
+        if existing_user:
+            raise ValidationError('That username already exists. Please choose a different one.')
+
+class LoginForm(FlaskForm):
+    username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
+    password = PasswordField(validators=[InputRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Password"})
+    submit = SubmitField('Login')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        new_user = User(username=form.username.data, password=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+        flash('Registration successful! Please log in.', 'success')
+        return redirect(url_for('login'))
+    return render_template('register.html', form=form)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user)
+            return redirect(url_for('dashboard'))
+        else:
+            flash('Login failed. Check your username and password.', 'danger')
+    return render_template('login.html', form=form)
+
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    temp, hum = get_latest_sensor_data()  # Replace with your actual sensor data fetching function
+    return render_template('dashboard.html', temp=temp, hum=hum)
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+def get_latest_sensor_data():
     conn = psycopg.connect(
         dbname="sensor",
         user="postgres",
-        password="1Ab2",
+        password="Aryan1027@@",
         host="localhost"
     )
     cur = conn.cursor()
@@ -16,10 +90,5 @@ def get_latest_data():
     conn.close()
     return {row[0]: row[1] for row in data}
 
-@app.route('/')
-def home():
-    data = get_latest_data()
-    return render_template('dashboard.html', temp=data.get('Temperature'), hum=data.get('Humidity'))
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)

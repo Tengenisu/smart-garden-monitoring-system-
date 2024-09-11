@@ -6,7 +6,7 @@ def log_data(sensor_type, value):
     conn = psycopg.connect(
         dbname="sensor",
         user="postgres",
-        password="1Ab2",
+        password="Aryan1027@@",
         host="localhost"
     )
     cur = conn.cursor()
