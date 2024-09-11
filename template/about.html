@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>About</title>
+    <style>
+        .vh-100 {
+            height: 100vh;
+        }
+        .divider:after,
+        .divider:before {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #eee;
+        }
+        .h-custom {
+            height: calc(100% - 73px);
+        }
+        @media (max-width: 450px) {
+            .h-custom {
+                height: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Smart Plant Monitoring</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">Contact</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/signup">Signup</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="container mt-5">
+        <h1 class="mb-4">About Us</h1>
+        <section>
+            <h2>Smart Plant Monitoring System</h2>
+            <p>Welcome to the Smart Plant Monitoring System, a cutting-edge solution designed to help you take care of your plants with ease. Our system continuously monitors essential plant health parameters, including soil moisture, light levels, and temperature, to ensure your plants thrive.</p>
+        </section>
+
+        <section>
+            <h3>Features</h3>
+            <ul>
+                <li><strong>Real-Time Data Monitoring</strong>: Access live data on soil moisture, light intensity, and temperature directly from our web interface.</li>
+                <li><strong>Notifications</strong>: Receive instant alerts via mobile app when your plants need water or optimal sunlight exposure.</li>
+                <li><strong>Plant Care Suggestions</strong>: Get actionable recommendations to keep your plants in their best condition based on real-time data.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>How It Works</h3>
+            <ol>
+                <li><strong>Data Collection</strong>: Sensors connected to a Raspberry Pi measure soil moisture, light, and temperature levels.</li>
+                <li><strong>Data Processing</strong>: The collected data is processed and analyzed to determine the needs of your plants.</li>
+                <li><strong>Real-Time Updates</strong>: View current conditions and receive notifications through our web interface.</li>
+                <li><strong>Actionable Alerts</strong>: Get timely alerts to take necessary actions, such as watering your plants or adjusting their light exposure.</li>
+            </ol>
+        </section>
+
+        <section>
+            <h3>Future Plans</h3>
+            <p>We are excited to expand our system with a dedicated mobile app in the near future. The app will offer enhanced features, including:</p>
+            <ul>
+                <li><strong>Mobile Notifications</strong>: Instant alerts and reminders on your mobile device.</li>
+                <li><strong>Remote Monitoring</strong>: Access real-time data and control settings from anywhere.</li>
+                <li><strong>Enhanced User Experience</strong>: A user-friendly interface for managing multiple plants and viewing historical data.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Our Mission</h3>
+            <p>Our goal is to make plant care effortless and effective, allowing you to focus on enjoying your plants rather than worrying about their needs. By leveraging advanced monitoring technology, we aim to help you create a thriving environment for your plants.</p>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <div class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-dark">
+        <!-- Copyright -->
+        <div class="text-white mb-3 mb-md-0">
+            Copyright © 2024. All rights reserved.
+        </div>
+        <!-- Right -->
+        <div>
+            <a href="#!" class="text-white me-4">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#!" class="text-white me-4">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#!" class="text-white me-4">
+                <i class="fab fa-google"></i>
+            </a>
+            <a href="#!" class="text-white">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+        </div>
+        <!-- Right -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
