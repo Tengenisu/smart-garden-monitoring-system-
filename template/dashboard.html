@@ -54,6 +54,15 @@
 
     <!-- Main content -->
     <div class="container mt-5 main-content">
+        {% if alerts %}
+            <div class="alert alert-warning" role="alert">
+                {% for sensor, message in alerts.items() %}
+                    {% if message %}
+                        <p>{{ message }}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
         <h1 class="mb-4">Sensor Monitoring Dashboard</h1>
         <div class="row mt-3">
             <div class="col-md-6">
