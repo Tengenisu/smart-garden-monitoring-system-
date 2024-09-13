@@ -21,8 +21,8 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 def send_sms(body, to):
-    account_sid = 'account_sid'
-    auth_token = 'auth_token'
+    account_sid = 'enter your sid'
+    auth_token = 'enter your auth token'
     client = Client(account_sid, auth_token)
     message = client.messages.create(
         body=body,

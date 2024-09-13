@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historical Sensor Data</title>
+</head>
+<body>
+    <h1>Historical Sensor Data</h1>
+    <form action="{{ url_for('get_history') }}" method="get">
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date" required>
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date" required>
+        <button type="submit">Get Data</button>
+    </form>
+
+    {% if data %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Sensor Type</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in data %}
+            <tr>
+                <td>{{ entry.timestamp }}</td>
+                <td>{{ entry.sensor_type }}</td>
+                <td>{{ entry.value }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('plot_data', start_date=request.args.get('start_date'), end_date=request.args.get('end_date')) }}">View Plot</a>
+    {% endif %}
+</body>
+</html>

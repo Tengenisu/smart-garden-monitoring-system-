@@ -5,7 +5,7 @@ def get_db_connection():
     conn = psycopg.connect(
         dbname="sensor",
         user="postgres",
-        password="1Ab2",
+        password="Aryan1027@@",
         host="localhost"
     )
     return conn
